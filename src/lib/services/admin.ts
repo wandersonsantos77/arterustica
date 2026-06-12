@@ -1,7 +1,7 @@
-import { supabase } from '../supabase.ts';
-import { Database, TablesInsert, TablesUpdate } from '../database.types.ts';
+import { supabase } from '../supabase';
+import { Database, TablesInsert, TablesUpdate } from '../database.types';
 
-// Agora criamos atalhos para os tipos que você vai usar muito:
+// Definindo os atalhos de forma segura baseados no seu arquivo gerado
 type Category = Database['public']['Tables']['categories']['Row'];
 type ProductRow = Database['public']['Tables']['products']['Row'];
 type ProductInsert = Database['public']['Tables']['products']['Insert'];
@@ -16,6 +16,8 @@ type LeadUpdate = Database['public']['Tables']['leads']['Update'];
 type Material = Database['public']['Tables']['materials']['Row'];
 type Mold = Database['public']['Tables']['molds']['Row'];
 type ProductionBatch = Database['public']['Tables']['production_batches']['Row'];
+
+// Tipo Product para manter compatibilidade com a função mapProduct
 type Product = ProductRow & { category?: Category | null };
 
 function mapProduct(product: ProductRow & { category?: Category | null }): Product {
@@ -175,7 +177,6 @@ export async function updateLeadStatus(leadId: string, payload: Pick<LeadUpdate,
   }
 }
 
-// API para Materiais
 export async function fetchAdminMaterials(): Promise<Material[]> {
   const { data, error } = await supabase
     .from('materials')
@@ -202,7 +203,6 @@ export async function deleteMaterial(materialId: string): Promise<void> {
   if (error) throw error;
 }
 
-// API para Moldes
 export async function fetchAdminMolds(): Promise<(Mold & { product: { name: string } | null })[]> {
   const { data, error } = await supabase
     .from('molds')
@@ -229,7 +229,6 @@ export async function deleteMold(moldId: string): Promise<void> {
   if (error) throw error;
 }
 
-// API para Lotes de Produção
 export type ProductionBatchWithDetails = ProductionBatch & {
   product_variant: {
     name: string;
