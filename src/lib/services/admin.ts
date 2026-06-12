@@ -1,23 +1,22 @@
-import type {
-  Category,
-  InventoryStock,
-  InventoryStockInsert,
-  Lead,
-  LeadUpdate,
-  Product,
-  ProductInsert,
-  ProductRow,
-  ProductUpdate,
-  ProductVariant,
-  ProductVariantInsert,
-  ProductVariantUpdate,
-  Material,
-  Mold,
-  ProductionBatch,
-  TablesInsert,
-  TablesUpdate,
-} from '../database.types';
-import { supabase } from '../supabase';
+import { supabase } from '../supabase.ts';
+import { Database, TablesInsert, TablesUpdate } from '../database.types.ts';
+
+// Agora criamos atalhos para os tipos que você vai usar muito:
+type Category = Database['public']['Tables']['categories']['Row'];
+type ProductRow = Database['public']['Tables']['products']['Row'];
+type ProductInsert = Database['public']['Tables']['products']['Insert'];
+type ProductUpdate = Database['public']['Tables']['products']['Update'];
+type ProductVariant = Database['public']['Tables']['product_variants']['Row'];
+type ProductVariantInsert = Database['public']['Tables']['product_variants']['Insert'];
+type ProductVariantUpdate = Database['public']['Tables']['product_variants']['Update'];
+type InventoryStock = Database['public']['Tables']['inventory_stock']['Row'];
+type InventoryStockInsert = Database['public']['Tables']['inventory_stock']['Insert'];
+type Lead = Database['public']['Tables']['leads']['Row'];
+type LeadUpdate = Database['public']['Tables']['leads']['Update'];
+type Material = Database['public']['Tables']['materials']['Row'];
+type Mold = Database['public']['Tables']['molds']['Row'];
+type ProductionBatch = Database['public']['Tables']['production_batches']['Row'];
+type Product = ProductRow & { category?: Category | null };
 
 function mapProduct(product: ProductRow & { category?: Category | null }): Product {
   return {
