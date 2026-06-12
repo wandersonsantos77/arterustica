@@ -17,6 +17,7 @@ import AdminMaterials from './pages/admin/AdminMaterials';
 import AdminMolds from './pages/admin/AdminMolds';
 import AdminProduction from './pages/admin/AdminProduction';
 
+// TODO: Adicionar um sistema de busca na página de catálogo para facilitar a navegação
 export default function App() {
   return (
     <BrowserRouter>
